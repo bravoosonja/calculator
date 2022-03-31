@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: whitesmoke;
+  background-color: #f8f7ff;
 }
 
 button {
@@ -33,7 +33,7 @@ button {
 }
 
 .calculator {
-  background-color: #f8f7ff;
+  background-color: #f2f7ff;
   border: 5px solid #7371fc;
   border-radius: 15px;
   padding: 30px;
