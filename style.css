@@ -1,12 +1,27 @@
 /* color palette: https://coolors.co/palette/9381ff-b8b8ff-f8f7ff-ffeedd-ffd8be */
-
-body {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
   font-family: "Inter", sans-serif;
-  background-color: #ffeedd;
-  margin: none;
-  padding: none;
 }
 
+body {
+  background-color: whitesmoke;
+}
+
+button {
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  outline: none;
+}
+
+/* main */
 .container {
   display: flex;
   align-items: center;
@@ -19,6 +34,70 @@ body {
 
 .calculator {
   background-color: #f8f7ff;
-  border: 4px solid #d4c1ec;
+  border: 5px solid #7371fc;
+  border-radius: 15px;
+  padding: 30px;
   width: 400px;
+  box-shadow: 10px 8px 8px #afafdc;
+}
+
+.screen {
+  padding: 10px 20px;
+  border: 3px solid #7371fc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: white;
+  text-align: right;
+  word-wrap: break-word;
+  word-break: break-all;
+  font-weight: 400;
+}
+
+.screen-last {
+  min-height: 32px;
+  font-size: 20px;
+}
+
+.screen-current {
+  min-height: 64px;
+  font-size: 40px;
+}
+
+.buttons-grid {
+  font-weight: 400;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+.btn {
+  padding: 20px;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+/* clear and delete button */
+.span-2 {
+  grid-column: span 2;
+  background-color: #7371fc;
+  color: white;
+  border-radius: 5px;
+  font-size: 22px;
+}
+
+#num,
+#point-btn {
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #b8b8ff;
+  color: white;
+  font-size: 25px;
+}
+
+#operator {
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #9381ff;
+  color: white;
+  font-size: 25px;
 }

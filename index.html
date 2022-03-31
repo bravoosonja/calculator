@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,9 +17,34 @@
   <body>
     <div class="container">
       <div class="calculator">
-        <div class="screen"></div>
-        <div class="operator"></div>
-        <div class="numbers"></div>
+        <div class="screen">
+          <div class="screen-last" id="last-operation-screen"></div>
+          <div class="screen-current" id="current-operation-screen">0</div>
+        </div>
+        <div class="buttons-grid">
+          <button class="btn span-2" id="clar-btn">CLEAR</button>
+          <button class="btn span-2" id="delete-btn">DELETE</button>
+
+          <button class-="btn" id="num" data-number>7</button>
+          <button class-="btn" id="num" data-number>8</button>
+          <button class-="btn" id="num" data-number>9</button>
+          <button class="btn" id="operator" data-operator>÷</button>
+
+          <button class-="btn" id="num" data-number>4</button>
+          <button class-="btn" id="num" data-number>5</button>
+          <button class-="btn" id="num" data-number>6</button>
+          <button class="btn" id="operator" data-operator>×</button>
+
+          <button class-="btn" id="num" data-number>1</button>
+          <button class-="btn" id="num" data-number>2</button>
+          <button class-="btn" id="num" data-number>3</button>
+          <button class="btn" id="operator" data-operator>-</button>
+
+          <button class-="btn" id="num" data-number>0</button>
+          <button class-="btn" id="point-btn" data-number>.</button>
+          <button class="bt" id="operator" data-operator>+</button>
+          <button class="btn" id="operator" data-operator>=</button>
+        </div>
       </div>
     </div>
   </body>
