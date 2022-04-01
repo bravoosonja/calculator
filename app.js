@@ -30,19 +30,21 @@ operatorButtons.forEach((button) =>
   button.addEventListener("click", () => chooseOperation(button.textContent))
 );
 
-//takes user input and converts it to string. prevents multiple . input
+//main functions
+//takes user input
 function appendNumber(number) {
   if (currentOperationScreen.textContent === "0" || shouldResetScreen)
     resetScreen();
   currentOperationScreen.textContent += number;
 }
 
+//resets screen to prevent appending numbers after operators
 function resetScreen() {
   currentOperationScreen.textContent = "";
   shouldResetScreen = false;
 }
 
-//puts last operation to last operation screen and updates current operation
+//moves the current operation to last operation screen
 function chooseOperation(operator) {
   if (currentOperation !== null) updateDisplay();
   firstOperand = currentOperationScreen.textContent;
@@ -51,7 +53,7 @@ function chooseOperation(operator) {
   shouldResetScreen = true;
 }
 
-//deletes all values and clears screen
+//deletes all values AC function on calculator
 function clear() {
   currentOperationScreen.textContent = "";
   lastOperationScreen.textContent = "";
@@ -60,14 +62,14 @@ function clear() {
   currentOperation = null;
 }
 
-//Deletes everything; equivalent to AC
+//Deletes a single last input
 function deleteOne() {
   currentOperationScreen.textContent = currentOperationScreen.textContent
     .toString()
     .slice(0, -1);
 }
 
-//takes an operator and 2 numbers and then calls one of the above functions on the numbers
+//takes an operator and 2 numbers and then calls one of the arithmetic functions on the numbers
 function compute(operator, a, b) {
   a = Number(a);
   b = Number(b);
@@ -75,11 +77,11 @@ function compute(operator, a, b) {
     case "+":
       return add(a, b);
     case "−":
-      return substract(a, b);
+      return subtract(a, b);
     case "×":
       return multiply(a, b);
     case "÷":
-      if (b === 0) return null;
+      if (b === 0) return NaN;
       else return divide(a, b);
     default:
       return null;
@@ -101,11 +103,12 @@ function updateDisplay() {
   currentOperation = null;
 }
 
+//rounds results to 3 digits
 function roundResult(number) {
   return Math.round(number * 1000) / 1000;
 }
 
-//converts integer to float
+//converts number inputs
 function getDisplayNumber(number) {
   const stringNumber = number.toString();
   const integerDigits = parseFloat(stringNumber.split(".")[0]);
@@ -125,6 +128,7 @@ function getDisplayNumber(number) {
   }
 }
 
+//allows keyboard input
 function handleKeyboardInput(e) {
   if (e.key >= 0 && e.key <= 9) appendNumber(e.key);
   if (e.key === ".") appendNumber(e.key);
@@ -135,6 +139,7 @@ function handleKeyboardInput(e) {
     chooseOperation(convertOperator(e.key));
 }
 
+//allows keyboard input for operators
 function convertOperator(keyboardOperator) {
   if (keyboardOperator === "/") return "÷";
   if (keyboardOperator === "*") return "×";
