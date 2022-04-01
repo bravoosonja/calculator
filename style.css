@@ -57,6 +57,7 @@ button {
 .screen-last {
   min-height: 32px;
   font-size: 20px;
+  color: #736ced;
 }
 
 .screen-current {

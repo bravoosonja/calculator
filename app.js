@@ -1,3 +1,9 @@
+//global variables
+let firstOperand = "";
+let secondOperand = "";
+let currentOperation = null;
+let shouldResetScreen = false;
+
 //buttons & selectors
 const numberButtons = document.querySelectorAll("[data-number]");
 const operatorButtons = document.querySelectorAll("[data-operator]");
@@ -12,26 +18,42 @@ const currentOperationScreen = document.getElementById(
 
 //event listeners
 window.addEventListener("keydown", handleKeyboardInput);
-equalsButton.addEventListener("click", evaluate);
 clearButton.addEventListener("click", clear);
+equalsButton.addEventListener("click", updateDisplay);
 deleteButton.addEventListener("click", deleteOne);
-pointButton.addEventListener("click", appendPoint);
 
 numberButtons.forEach((button) =>
-  button.addEventListener("click", () =>
-    calculator.appendNumber(button.textContent)
-  )
+  button.addEventListener("click", () => appendNumber(button.textContent))
 );
 
 operatorButtons.forEach((button) =>
-  button.addEventListener("click", () =>
-    calculator.updateDisplay(button.textContent)
-  )
+  button.addEventListener("click", () => chooseOperation(button.textContent))
 );
+
+//takes user input and converts it to string. prevents multiple . input
+function appendNumber(number) {
+  if (currentOperationScreen.textContent === "0" || shouldResetScreen)
+    resetScreen();
+  currentOperationScreen.textContent += number;
+}
+
+function resetScreen() {
+  currentOperationScreen.textContent = "";
+  shouldResetScreen = false;
+}
+
+//puts last operation to last operation screen and updates current operation
+function chooseOperation(operator) {
+  if (currentOperation !== null) updateDisplay();
+  firstOperand = currentOperationScreen.textContent;
+  currentOperation = operator;
+  lastOperationScreen.textContent = `${firstOperand} ${currentOperation}`;
+  shouldResetScreen = true;
+}
 
 //deletes all values and clears screen
 function clear() {
-  currentOperationScreen.textContent = "0";
+  currentOperationScreen.textContent = "";
   lastOperationScreen.textContent = "";
   firstOperand = "";
   secondOperand = "";
@@ -45,36 +67,79 @@ function deleteOne() {
     .slice(0, -1);
 }
 
-//takes user input
-function appendNumber(number) {
-  if (currentOperationScreen.textContent === "0") clear();
-  currentOperationScreen.textContent += number;
+//takes an operator and 2 numbers and then calls one of the above functions on the numbers
+function compute(operator, a, b) {
+  a = Number(a);
+  b = Number(b);
+  switch (operator) {
+    case "+":
+      return add(a, b);
+    case "−":
+      return substract(a, b);
+    case "×":
+      return multiply(a, b);
+    case "÷":
+      if (b === 0) return null;
+      else return divide(a, b);
+    default:
+      return null;
+  }
 }
-
-//controls operation
-function chooseOperation(operator) {
-  if (currentOperation !== null) evaluate();
-  firstOperand = currentOperationScreen.textContent;
-  currentOperation = operator;
-  lastOperationScreen.textContent = `${firstOperand} ${currentOperation}`;
-}
-
-//displays result
-function compute() {}
 
 //updates values inside of screen
 function updateDisplay() {
-  this.currentOperationScreen.innerText = this.currentOperationScreen;
+  if (currentOperation === null) return;
+  if (currentOperation === "÷" && currentOperationScreen.textContent === "0") {
+    alert("You can't divide a number by 0!");
+    return;
+  }
+  secondOperand = currentOperationScreen.textContent;
+  currentOperationScreen.textContent = roundResult(
+    compute(currentOperation, firstOperand, secondOperand)
+  );
+  lastOperationScreen.textContent = `${firstOperand} ${currentOperation} ${secondOperand} =`;
+  currentOperation = null;
+}
+
+function roundResult(number) {
+  return Math.round(number * 1000) / 1000;
+}
+
+//converts integer to float
+function getDisplayNumber(number) {
+  const stringNumber = number.toString();
+  const integerDigits = parseFloat(stringNumber.split(".")[0]);
+  const decimalDigits = stringNumber.split(".")[1];
+  let integerDisplay;
+  if (isNaN(integerDigits)) {
+    integerDisplay = "";
+  } else {
+    integerDisplay = integerDigits.toLocaleString("en", {
+      maximumFractionDigits: 0,
+    });
+  }
+  if (decimalDigits != null) {
+    return `${integerDisplay}.${decimalDigits}`;
+  } else {
+    return integerDisplay;
+  }
 }
 
 function handleKeyboardInput(e) {
   if (e.key >= 0 && e.key <= 9) appendNumber(e.key);
-  if (e.key === ".") appendPoint();
-  if (e.key === "=" || e.key === "Enter") evaluate();
+  if (e.key === ".") appendNumber(e.key);
+  if (e.key === "=" || e.key === "Enter") updateDisplay();
   if (e.key === "Backspace") deleteOne();
   if (e.key === "Escape") clear();
   if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/")
-    setOperation(convertOperator(e.key));
+    chooseOperation(convertOperator(e.key));
+}
+
+function convertOperator(keyboardOperator) {
+  if (keyboardOperator === "/") return "÷";
+  if (keyboardOperator === "*") return "×";
+  if (keyboardOperator === "-") return "−";
+  if (keyboardOperator === "+") return "+";
 }
 
 //arithmetic functions
@@ -92,23 +157,4 @@ function multiply(a, b) {
 
 function divide(a, b) {
   return a / b;
-}
-
-//takes an operator and 2 numbers and then calls one of the above functions on the numbers
-function operate(operator, a, b) {
-  a = Number(a);
-  b = Number(b);
-  switch (operator) {
-    case "+":
-      return add(a, b);
-    case "-":
-      return subtract(a, b);
-    case "x":
-      return multiply(a, b);
-    case "÷":
-      if (b === 0) return null;
-      else return divide(a, b);
-    default:
-      return null;
-  }
 }
