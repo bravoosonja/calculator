@@ -33,9 +33,9 @@ button {
 }
 
 .calculator {
-  background-color: #f2f7ff;
+  background-color: #f5efff;
   border: 5px solid #7371fc;
-  border-radius: 15px;
+  border-radius: 25px;
   padding: 30px;
   width: 400px;
   box-shadow: 10px 8px 8px #afafdc;
@@ -43,14 +43,15 @@ button {
 
 .screen {
   padding: 10px 20px;
-  border: 3px solid #7371fc;
-  border-radius: 5px;
+  border: 2px solid #7371fc;
+  border-radius: 25px;
   margin-bottom: 20px;
   background-color: white;
   text-align: right;
   word-wrap: break-word;
   word-break: break-all;
   font-weight: 400;
+  box-shadow: 8px 4px 4px #afafdc;
 }
 
 .screen-last {
@@ -72,7 +73,6 @@ button {
 
 .btn {
   padding: 20px;
-  border-radius: 5px;
   font-size: 20px;
 }
 
@@ -81,23 +81,26 @@ button {
   grid-column: span 2;
   background-color: #7371fc;
   color: white;
-  border-radius: 5px;
+  border-radius: 25px;
   font-size: 22px;
+  box-shadow: 8px 4px 4px #afafdc;
 }
 
 #num,
 #point-btn {
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 35px;
   background-color: #b8b8ff;
   color: white;
   font-size: 25px;
+  box-shadow: 8px 4px 4px #afafdc;
 }
 
 #operator {
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 25px;
   background-color: #9381ff;
   color: white;
   font-size: 25px;
+  box-shadow: 8px 4px 4px #afafdc;
 }
