@@ -33,7 +33,7 @@ button {
 }
 
 .calculator {
-  background-color: #f5efff;
+  background-color: #fef9ff;
   border: 5px solid #7371fc;
   border-radius: 25px;
   padding: 30px;
@@ -43,7 +43,7 @@ button {
 
 .screen {
   padding: 10px 20px;
-  border: 2px solid #7371fc;
+  border: 3px solid #7371fc;
   border-radius: 25px;
   margin-bottom: 20px;
   background-color: white;
@@ -101,6 +101,6 @@ button {
   border-radius: 25px;
   background-color: #9381ff;
   color: white;
-  font-size: 25px;
+  font-size: 28px;
   box-shadow: 8px 4px 4px #afafdc;
 }

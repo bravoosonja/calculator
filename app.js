@@ -10,23 +10,11 @@ const currentOperationScreen = document.getElementById(
   "current-operation-screen"
 );
 
-//displays - class calculator
-//?? is this necessary?
-class Calculator {
-  constructor(lastOperationScreen, currentOperationScreen) {
-    this.lastOperationScreen = lastOperationScreen;
-    this.currentOperationScreen = currentOperationScreen;
-    this.clear();
-  }
-}
-
-const calculator = new Calculator(lastOperationScreen, currentOperationScreen);
-
 //event listeners
 window.addEventListener("keydown", handleKeyboardInput);
 equalsButton.addEventListener("click", evaluate);
 clearButton.addEventListener("click", clear);
-deleteButton.addEventListener("click", deleteNumber);
+deleteButton.addEventListener("click", deleteOne);
 pointButton.addEventListener("click", appendPoint);
 
 numberButtons.forEach((button) =>
@@ -43,26 +31,51 @@ operatorButtons.forEach((button) =>
 
 //deletes all values and clears screen
 function clear() {
-  this.currentOperationScreen = "";
-  this.lastOperationScreen = "";
-  this.operation = undefined;
+  currentOperationScreen.textContent = "0";
+  lastOperationScreen.textContent = "";
+  firstOperand = "";
+  secondOperand = "";
+  currentOperation = null;
 }
 
 //Deletes everything; equivalent to AC
-function deleteOne() {}
+function deleteOne() {
+  currentOperationScreen.textContent = currentOperationScreen.textContent
+    .toString()
+    .slice(0, -1);
+}
 
 //takes user input
-function appendNumber() {}
+function appendNumber(number) {
+  if (currentOperationScreen.textContent === "0") clear();
+  currentOperationScreen.textContent += number;
+}
 
 //controls operation
-//? is this necessary?
-function chooseOperation() {}
+function chooseOperation(operator) {
+  if (currentOperation !== null) evaluate();
+  firstOperand = currentOperationScreen.textContent;
+  currentOperation = operator;
+  lastOperationScreen.textContent = `${firstOperand} ${currentOperation}`;
+}
 
 //displays result
 function compute() {}
 
 //updates values inside of screen
-function updateDisplay() {}
+function updateDisplay() {
+  this.currentOperationScreen.innerText = this.currentOperationScreen;
+}
+
+function handleKeyboardInput(e) {
+  if (e.key >= 0 && e.key <= 9) appendNumber(e.key);
+  if (e.key === ".") appendPoint();
+  if (e.key === "=" || e.key === "Enter") evaluate();
+  if (e.key === "Backspace") deleteOne();
+  if (e.key === "Escape") clear();
+  if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/")
+    setOperation(convertOperator(e.key));
+}
 
 //arithmetic functions
 function add(a, b) {
